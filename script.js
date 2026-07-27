@@ -1,28 +1,71 @@
-function addUser() {
+const text = [
+    "Web Developer",
+    "Java Programmer",
+    "AI & ML Student",
+    "Frontend Developer"
+];
 
-    let name = document.getElementById("Name").value;
-    let age = document.getElementById("age").value;
-    let email = document.getElementById("emailtype").value;
+let index = 0;
+let char = 0;
 
-    if (name === "" || age === "" || email === "") {
-        alert("Please fill all 3 fields!");
-        return;
+function typing() {
+
+    const element = document.getElementById("typing");
+
+    if (char < text[index].length) {
+
+        element.innerHTML += text[index].charAt(char);
+
+        char++;
+
+        setTimeout(typing,100);
+
     }
 
-    let table = document.getElementById("userTable");
+    else{
 
-    let row = table.insertRow();
+        setTimeout(erase,1500);
 
-    let cell1 = row.insertCell(0);
-    let cell2 = row.insertCell(1);
-    let cell3 = row.insertCell(2);
+    }
 
-    cell1.innerHTML = name;
-    cell2.innerHTML = age;
-    cell3.innerHTML = email;
-
-    // Clear inputs
-    document.getElementById("Name").value = "";
-    document.getElementById("age").value = "";
-    document.getElementById("emailtype").value = "";
 }
+
+function erase(){
+
+    const element=document.getElementById("typing");
+
+    if(element.innerHTML.length>0){
+
+        element.innerHTML=element.innerHTML.slice(0,-1);
+
+        setTimeout(erase,50);
+
+    }
+
+    else{
+
+        index++;
+
+        if(index==text.length){
+
+            index=0;
+
+        }
+
+        char=0;
+
+        setTimeout(typing,300);
+
+    }
+
+}
+
+typing();
+
+document.querySelector("form").addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    alert("Message Sent Successfully!");
+
+});
